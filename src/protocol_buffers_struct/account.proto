@@ -1,0 +1,14 @@
+package proto;
+
+message Account
+{
+    required int32 id = 1;
+    required string name = 2;
+    required string account = 3;
+    required string password = 4;
+}
+
+message AccountBook
+{
+    repeated Account account = 1;
+}

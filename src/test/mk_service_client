@@ -1,0 +1,2 @@
+g++ -c -o client.o account_book_service_client_test.cc -lzmq -lczmq -lprotobuf
+g++ -o client client.o ../protocol_buffers_struct/account.pb.o ../account_constants.o -lzmq -lczmq -lprotobuf

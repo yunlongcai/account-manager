@@ -1,0 +1,5 @@
+g++ -c -o ../account_constants.o ../account_constants.cc
+
+g++ -c -o del.o del.cc -lzmq -lczmq 
+
+g++ -o del del.o ../account_constants.o -lzmq -lczmq

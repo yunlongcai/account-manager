@@ -1,0 +1,7 @@
+g++ -c -o account_book_manager_test.o account_book_manager_test.cc -lprotobuf
+
+g++ -c -o ../account_book_manager.o ../account_book_manager.cc -lprotobuf
+
+g++ -o account_book_manager_test account_book_manager_test.o ../account_book_manager.o ../protocol_buffers_struct/account.pb.o -lprotobuf
+
+./account_book_manager_test 

@@ -1,0 +1,12 @@
+g++ -c -o ../account_constants.o ../account_constants.cc 
+
+g++ -c -o service.o account_book_service_test.cc -lzmq -lczmq -lprotobuf
+
+g++ -c -o ../account_book_manager.o ../account_book_manager.cc -lzmq -lczmq -lprotobuf
+
+g++ -c -o ../account_book_service.o ../account_book_service.cc  -lzmq -lczmq -lprotobuf
+
+g++ -o service service.o ../protocol_buffers_struct/account.pb.o ../account_constants.o ../account_book_manager.o ../account_book_service.o -lzmq -lczmq -lprotobuf
+
+
+

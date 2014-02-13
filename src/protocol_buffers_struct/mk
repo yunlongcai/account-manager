@@ -1,0 +1,7 @@
+g++ -c -o account.pb.o account.pb.cc -lprotobuf
+
+g++ -c -o account_test.o account_test.cc -lprotobuf
+
+g++ -o account_test account_test.o account.pb.o -lprotobuf
+
+./account_test
