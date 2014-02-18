@@ -1,7 +1,7 @@
 #ifndef ACCOUNT_BOOK_MANAGER_H
 #define ACCOUNT_BOOK_MANAGER_H
 
-#include "protocol_buffers_struct/account.pb.h"
+#include "account.pb.h"
 
 #include <string>
 #include <cstdio>
@@ -17,6 +17,7 @@ public:
 
     int addAccount(const proto::Account *account);
     int delAccount(const std::string &name);
+    int save();
 
     proto::Account *getAccount(const std::string &name);
     proto::AccountBook *getAllAccount();

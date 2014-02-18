@@ -63,7 +63,15 @@ int AccountBookService::handle_func(zloop_t *loop, zmq_pollitem_t *poller, void 
         char *name = zmsg_popstr(msg);
         if(name == NULL)
         {
-            
+            //if no name specified, show all
+            proto::AccountBook *account_book = account_book_manager.getAllAccount();
+            zmsg_addmem(ret_msg, &ACCOUNT::OK, 1);
+            zmsg_addmem(ret_msg, ACCOUNT::GET, strlen(ACCOUNT::GET));
+            zmsg_addmem(ret_msg, &ACCOUNT::PROTO_ACCOUNT_BOOK, 1);
+            message_data_length = account_book->ByteSize();
+            buf = new char[message_data_length];
+            account_book->SerializeToArray(buf, message_data_length);
+            zmsg_addmem(ret_msg, buf, message_data_length);
         }
         else
         {
@@ -85,6 +93,11 @@ int AccountBookService::handle_func(zloop_t *loop, zmq_pollitem_t *poller, void 
                 account->SerializeToArray(buf, message_data_length);
                 zmsg_addmem(ret_msg, buf, message_data_length);
             }
+        }
+        if(buf != NULL)
+        {
+            delete [] buf;
+            buf = NULL;
         }
     }
     else if(strcasecmp(cmd, ACCOUNT::ADD) == 0)
@@ -134,6 +147,9 @@ int AccountBookService::handle_func(zloop_t *loop, zmq_pollitem_t *poller, void 
     }
     else if(strcasecmp(cmd, ACCOUNT::SAVE) == 0)
     {
+        account_book_manager.save();
+        zmsg_addmem(ret_msg, &ACCOUNT::OK, 1);
+        zmsg_addmem(ret_msg, ACCOUNT::SAVE, strlen(ACCOUNT::SAVE));
     }
     else
     {

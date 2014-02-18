@@ -104,3 +104,9 @@ proto::AccountBook *AccountBookManager::getAllAccount()
     account_book_->CopyFrom(*account_book);
     return account_book_;
 }
+
+int AccountBookManager::save()
+{
+    saveAccountBook(ACCOUNT_FILE);
+    return 0;
+}

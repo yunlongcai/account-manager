@@ -1,0 +1,5 @@
+rm *.o
+rm client
+rm service
+rm add
+rm del
