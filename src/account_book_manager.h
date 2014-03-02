@@ -27,6 +27,8 @@ public:
 private:
     void loadAccountBook(const std::string &filename);
     void saveAccountBook(const std::string &filename);
+    
+    void checkFile(const std::string &filename);
 
 private:
     proto::AccountBook *account_book;

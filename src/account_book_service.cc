@@ -159,5 +159,7 @@ int AccountBookService::handle_func(zloop_t *loop, zmq_pollitem_t *poller, void 
 
     zmsg_destroy(&msg);
     zmsg_send(&ret_msg, socket);
+
+    account_book_manager.save();
 }
 

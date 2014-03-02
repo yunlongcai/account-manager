@@ -1,0 +1,12 @@
+g++ -g -c -o account.pb.o account.pb.cc
+
+g++ -g -c -o account_constants.o account_constants.cc 
+
+g++ -g -c -o account_book_manager.o account_book_manager.cc -lzmq -lczmq -lprotobuf
+
+g++ -g -c -o account_book_service.o account_book_service.cc -lzmq -lczmq -lprotobuf
+
+g++ -g -c -o service.o service.cc
+
+g++ -g -o service service.o account_book_service.o account_book_manager.o account_constants.o account.pb.o -lzmq -lczmq -lprotobuf
+

@@ -1,0 +1,10 @@
+g++ -g -c -o account.pb.o account.pb.cc
+
+g++ -g -c -o account_constants.o account_constants.cc 
+
+g++ -g -c -o account_client.o account_client.cc -lzmq -lczmq -lprotobuf
+
+g++ -g -c -o client.o client.cc
+
+g++ -g -o client client.o account_client.o account_constants.o account.pb.o -lzmq -lczmq -lprotobuf
+

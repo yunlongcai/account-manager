@@ -1,7 +1,11 @@
 #include "account_book_manager.h"
+#include <cstdio>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <string>
 
-const std::string AccountBookManager::ACCOUNT_FILE("data/account.dat");
+const std::string AccountBookManager::ACCOUNT_FILE("/tmp/account-book-data/account.dat");
 
 
 AccountBookManager::AccountBookManager()
@@ -70,6 +74,7 @@ void AccountBookManager::dump()
 
 void AccountBookManager::loadAccountBook(const std::string &filename)
 {
+    checkFile(filename);
     std::fstream input(filename.c_str(), std::ios::in | std::ios::binary);
     account_book->ParseFromIstream(&input);
     input.close();
@@ -80,6 +85,41 @@ void AccountBookManager::saveAccountBook(const std::string &filename)
     std::fstream output(filename.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
     account_book->SerializeToOstream(&output);
     output.close();
+}
+
+void AccountBookManager::checkFile(const std::string &filename)
+{
+    //if file exists, do nothing
+    if(access(filename.c_str(), F_OK | R_OK | W_OK) == 0)
+        return;
+    
+    //get file path
+    std::string::size_type pos = filename.rfind("/");
+    std::string file_path = filename.substr(0, pos);
+    
+    std::string cur_path;
+    std::string::size_type start_pos = 0;
+    pos = file_path.find("/", start_pos);
+    while(pos != std::string::npos)
+    {
+        cur_path = file_path.substr(0, pos + 1);
+        std::cout << cur_path << std::endl;
+        if(access(cur_path.c_str(), F_OK) != 0)
+        {
+            mkdir(cur_path.c_str(), S_IRWXU);
+        }
+        start_pos = pos + 1;
+        pos = file_path.find("/", start_pos);
+    }
+    mkdir(file_path.c_str(), S_IRWXU);
+
+    //creat file
+    FILE *file = fopen(filename.c_str(), "w");
+    if(file != NULL)
+    {
+        fclose(file);
+        file = NULL;
+    }
 }
 
 proto::Account *AccountBookManager::getAccount(const std::string &name)
