@@ -1,1 +1,1 @@
-The account manage is used to manage your account. And it just for practice.
+The account manager is used to manage your account; it is just for practice.
